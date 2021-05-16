@@ -33,6 +33,14 @@ const AppProvider = ({ children }) => {
 		});
 	};
 
+	const checkAnswer = (value) => {
+		if (value) {
+			setCorrect((oldState) => oldState + 1);
+		}
+
+		nextQuestion();
+	};
+
 	const fetchQuestions = async (url) => {
 		setIsLoading(true);
 		setWaiting(false);
@@ -69,7 +77,8 @@ const AppProvider = ({ children }) => {
 				correct,
 				error,
 				isModalOpen,
-				nextQuestion
+				nextQuestion,
+				checkAnswer
 			}}
 		>
 			{children}
