@@ -22,6 +22,32 @@ const AppProvider = ({ children }) => {
 	const [error, setError] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
+	const fetchQuestions = async (url) => {
+		setIsLoading(true);
+		setWaiting(false);
+		const response = await axios(url).catch((e) => console.log(e));
+
+		if (response) {
+			const data = response.data.results;
+			console.log(data);
+			if (data.length > 0) {
+				setQuestions(data);
+				setIsLoading(false);
+				setWaiting(false);
+				setError(false);
+			} else {
+				setWaiting(true);
+				setError(true);
+			}
+		} else {
+			setWaiting(true);
+		}
+	};
+
+	useEffect(() => {
+		fetchQuestions(url);
+	}, []);
+
 	return (
 		<AppContext.Provider
 			value={{
